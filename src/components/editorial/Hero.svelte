@@ -284,7 +284,7 @@
   }
 
   @media (max-width: 720px) {
-    .hero { padding: 88px 20px 40px; }
+    .hero { padding: 88px 20px 56px; }
     .stage {
       grid-template-columns: 1fr;
       gap: 12px;
@@ -293,8 +293,18 @@
     .art { order: -1; opacity: 0.7; }
     .art :global(svg) { width: 180px; height: 180px; }
     .num { letter-spacing: -6px; }
-    .city { font-size: 36px; }
-    .scroll-hint { font-size: 10px; }
+    .city { font-size: 30px; line-height: 1.05; }
+    .loc {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      min-width: 0;
+      flex: 1 1 100%;
+    }
+    .country { padding-bottom: 0; align-self: flex-start; }
+    .meta-bottom { gap: 12px; }
+    .counts { text-align: left; }
+    .scroll-hint { font-size: 10px; bottom: 14px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
