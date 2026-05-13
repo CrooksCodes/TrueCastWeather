@@ -58,10 +58,6 @@ html, body {
   padding: 0;
   background: var(--bg-0);
 }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-}
 
 body {
   font-family: var(--font);

@@ -95,15 +95,12 @@
     </div>
   </div>
 
-  <nav class="jump" aria-label="Jump to section">
-    <a href="#sec-hourly">Hourly</a>
-    <span class="j-sep" aria-hidden="true">·</span>
-    <a href="#sec-daily">7-day</a>
-    <span class="j-sep" aria-hidden="true">·</span>
-    <a href="#sec-air">Air</a>
-    <span class="j-sep" aria-hidden="true">·</span>
-    <a href="#sec-sources">Sources</a>
-  </nav>
+  <div class="scroll-hint" aria-hidden="true">
+    <span>Hourly · 7-day · Air · Sources</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+      <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </div>
 </header>
 
 <style>
@@ -270,36 +267,24 @@
   }
   .count-label { display: block; margin-top: 2px; }
 
-  .jump {
+  .scroll-hint {
     position: absolute;
     bottom: 18px; left: 50%;
     transform: translateX(-50%);
-    display: flex; align-items: center; gap: 4px;
-    padding: 8px 14px;
-    background: oklch(13% 0.018 260 / 0.5);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    color: var(--text-mute);
     font-size: 11px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    white-space: nowrap;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    animation: float 2.4s ease-in-out infinite;
   }
-  .jump a {
-    color: var(--text-dim);
-    text-decoration: none;
-    padding: 4px 8px;
-    border-radius: 999px;
-    font-weight: 500;
-    transition: color 200ms, background 200ms;
+  @keyframes float {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, 4px); }
   }
-  .jump a:hover,
-  .jump a:active { color: var(--accent); background: oklch(100% 0 0 / 0.05); }
-  .j-sep { color: var(--text-mute); opacity: 0.5; }
 
   @media (max-width: 720px) {
-    .hero { padding: 88px 20px 84px; }
+    .hero { padding: 88px 20px 40px; }
     .stage {
       grid-template-columns: 1fr;
       gap: 12px;
@@ -308,19 +293,11 @@
     .art { order: -1; opacity: 0.7; }
     .art :global(svg) { width: 180px; height: 180px; }
     .num { letter-spacing: -6px; }
-    .city { font-size: 30px; line-height: 1.05; }
-    .loc {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
-      min-width: 0;
-      flex: 1 1 100%;
-    }
-    .country { padding-bottom: 0; align-self: flex-start; }
-    .meta-bottom { gap: 12px; }
-    .counts { text-align: left; }
-    .jump { font-size: 10px; bottom: 14px; gap: 2px; padding: 6px 10px; }
-    .jump a { padding: 4px 6px; letter-spacing: 1px; }
+    .city { font-size: 36px; }
+    .scroll-hint { font-size: 10px; }
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-hint { animation: none; }
+  }
 </style>

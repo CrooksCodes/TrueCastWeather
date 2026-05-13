@@ -8,9 +8,8 @@
   interface Props {
     section: string;
     onsection: (s: string) => void;
-    onnavigate?: () => void;
   }
-  const { section, onsection, onnavigate }: Props = $props();
+  const { section, onsection }: Props = $props();
 
   const NAV = [
     { id: 'now',     label: 'Now',     icon: '◐' },
@@ -47,7 +46,6 @@
   function pick(loc: Location) {
     q = ''; suggestions = []; open = false;
     setLocation(loc);
-    onnavigate?.();
   }
 
   function submit(e: Event) {
@@ -160,7 +158,7 @@
           {@const t = tempCache[keyFor(f)]}
           {@const isCur = appState.location ? sameLoc(appState.location, f) : false}
           <li class:current={isCur}>
-            <button class="rail-pick" onclick={() => { setLocation(f); onnavigate?.(); }}>
+            <button class="rail-pick" onclick={() => setLocation(f)}>
               <span class="rail-name">
                 <span class="rail-text">{f.name}</span>
                 <span class="rail-country">{f.country}</span>
