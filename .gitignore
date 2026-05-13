@@ -1,0 +1,51 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.history/
+
+# Node (in case you ever add a dev server / tooling)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Python (in case you use python -m http.server with a venv)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Local secrets — should never be committed.
+# This app stores keys in browser localStorage, not files, but keep these here
+# in case you ever add a .env for tooling or a backend proxy.
+.env
+.env.local
+.env.*.local
+secrets.json
+*.key
+*.pem
+
+# Build output (none today, but future-proofing)
+dist/
+build/
+.cache/
+
+# Logs
+*.log
+
+# Claude Code session artifacts (if any leak in)
+.claude/
