@@ -31,13 +31,22 @@
   }: Props = $props();
 
   let section = $state('now');
+  let drawerOpen = $state(false);
+
+  function pickSection(s: string) {
+    section = s;
+    drawerOpen = false;
+  }
 </script>
 
-<div class="layout" data-section={section}>
-  <Sidebar {section} onsection={(s) => (section = s)} />
+<div class="layout" data-section={section} class:drawer-open={drawerOpen}>
+  {#if drawerOpen}
+    <button class="scrim" aria-label="Close menu" onclick={() => (drawerOpen = false)}></button>
+  {/if}
+  <Sidebar {section} onsection={pickSection} onnavigate={() => (drawerOpen = false)} />
 
   <main class="main">
-    <Topbar {section} />
+    <Topbar {section} onmenu={() => (drawerOpen = true)} />
 
     <div class="content" data-section={section}>
       {#if !summary || !appState.location}
@@ -277,9 +286,36 @@
     .single.split { grid-template-columns: 1fr; }
   }
 
+  .scrim {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: oklch(8% 0.01 260 / 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 0;
+    z-index: 40;
+    cursor: pointer;
+    animation: scrim-in 200ms ease-out;
+  }
+  @keyframes scrim-in { from { opacity: 0; } to { opacity: 1; } }
+
   @media (max-width: 720px) {
     .layout { grid-template-columns: 1fr; }
-    :global(.layout > aside.sb) { display: none !important; }
+    :global(.layout > aside.sb) {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: min(86vw, 320px);
+      transform: translateX(-100%);
+      transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 50;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .layout.drawer-open :global(> aside.sb) {
+      transform: translateX(0);
+    }
+    .scrim { display: block; }
     .content { padding: 16px; }
     .content[data-section="now"] { padding: 14px; }
     .mobile-nav { display: block; }
