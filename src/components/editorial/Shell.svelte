@@ -47,6 +47,7 @@
       <div class="col-main">
         {#if forecast}
           <Section
+            id="sec-hourly"
             eyebrow="Next 24 hours"
             title="Where the temperature drifts."
             subtitle="The Truecast line is drawn through the best-match ensemble. The translucent band shows the spread across GFS, ECMWF, and ICON. A wide band is uncertainty made visible."
@@ -55,6 +56,7 @@
           </Section>
 
           <Section
+            id="sec-daily"
             eyebrow="The week ahead"
             title="Seven days, in shape."
           >
@@ -62,6 +64,7 @@
           </Section>
 
           <Section
+            id="sec-air"
             eyebrow="Air & sky"
             title="What you're breathing, when the sun moves."
           >
@@ -80,6 +83,7 @@
       {#if rows}
         <aside class="col-side col-models">
           <Section
+            id="sec-sources"
             eyebrow="The Models"
             title="Who agrees with whom."
             subtitle="Top three sit closest to the median. The rest are a snapshot of where each operator's model lands right now. NWS only reports inside the United States — that's expected."

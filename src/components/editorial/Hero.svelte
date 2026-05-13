@@ -95,12 +95,15 @@
     </div>
   </div>
 
-  <div class="scroll-hint" aria-hidden="true">
-    <span>Hourly · 7-day · Air · Sources</span>
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-      <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-  </div>
+  <nav class="jump" aria-label="Jump to section">
+    <a href="#sec-hourly">Hourly</a>
+    <span class="j-sep" aria-hidden="true">·</span>
+    <a href="#sec-daily">7-day</a>
+    <span class="j-sep" aria-hidden="true">·</span>
+    <a href="#sec-air">Air</a>
+    <span class="j-sep" aria-hidden="true">·</span>
+    <a href="#sec-sources">Sources</a>
+  </nav>
 </header>
 
 <style>
@@ -267,21 +270,33 @@
   }
   .count-label { display: block; margin-top: 2px; }
 
-  .scroll-hint {
+  .jump {
     position: absolute;
     bottom: 18px; left: 50%;
     transform: translateX(-50%);
-    color: var(--text-mute);
+    display: flex; align-items: center; gap: 4px;
+    padding: 8px 14px;
+    background: oklch(13% 0.018 260 / 0.5);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     font-size: 11px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    animation: float 2.4s ease-in-out infinite;
+    white-space: nowrap;
   }
-  @keyframes float {
-    0%, 100% { transform: translate(-50%, 0); }
-    50% { transform: translate(-50%, 4px); }
+  .jump a {
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-weight: 500;
+    transition: color 200ms, background 200ms;
   }
+  .jump a:hover,
+  .jump a:active { color: var(--accent); background: oklch(100% 0 0 / 0.05); }
+  .j-sep { color: var(--text-mute); opacity: 0.5; }
 
   @media (max-width: 720px) {
     .hero { padding: 88px 20px 84px; }
@@ -304,10 +319,8 @@
     .country { padding-bottom: 0; align-self: flex-start; }
     .meta-bottom { gap: 12px; }
     .counts { text-align: left; }
-    .scroll-hint { font-size: 10px; bottom: 14px; }
+    .jump { font-size: 10px; bottom: 14px; gap: 2px; padding: 6px 10px; }
+    .jump a { padding: 4px 6px; letter-spacing: 1px; }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .scroll-hint { animation: none; }
-  }
 </style>

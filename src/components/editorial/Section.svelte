@@ -4,6 +4,7 @@
     title: string;
     subtitle?: string;
     align?: 'left' | 'center';
+    id?: string;
     children?: any;
   }
   const {
@@ -11,11 +12,12 @@
     title,
     subtitle = '',
     align = 'left',
+    id,
     children,
   }: Props = $props();
 </script>
 
-<section class="ed-sectn" class:center={align === 'center'}>
+<section class="ed-sectn" {id} class:center={align === 'center'}>
   <header>
     {#if eyebrow}<div class="eyebrow">{eyebrow}</div>{/if}
     <h2 class="title">{title}</h2>
@@ -32,6 +34,7 @@
     max-width: 1240px;
     margin: 0 auto;
     position: relative;
+    scroll-margin-top: 20px;
   }
   .ed-sectn.center { text-align: center; }
   .ed-sectn.center header { margin-inline: auto; }
