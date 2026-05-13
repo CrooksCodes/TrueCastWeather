@@ -144,6 +144,7 @@
     display: grid;
     grid-template-columns: 260px 1fr;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
   .main {
@@ -197,8 +198,11 @@
     border-radius: 0;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    padding: 0;
+    padding: 18px;
     height: 100%;
+  }
+  @media (max-width: 720px) {
+    .tile :global(.card) { padding: 16px; }
   }
   /* Top-sources / sources-table inside a tile shouldn't get the auto-fit grid. */
   .tile :global(.hourly),

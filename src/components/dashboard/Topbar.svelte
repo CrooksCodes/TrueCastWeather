@@ -49,9 +49,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     padding: 14px 26px;
     border-bottom: 1px solid var(--line);
     flex-shrink: 0;
+    min-width: 0;
+  }
+  .left { min-width: 0; flex: 1; }
+  .right { flex-shrink: 0; }
+  .title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  @media (max-width: 720px) {
+    .bar { padding: 12px 14px; }
+    .ts { display: none; }
   }
   .left { display: flex; align-items: center; gap: 12px; }
   .menu-btn {
