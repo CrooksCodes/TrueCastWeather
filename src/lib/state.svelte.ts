@@ -24,6 +24,22 @@ const writeJSON = (k: string, v: unknown) => {
   try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* ignore quota */ }
 };
 
+const readSessionJSON = <T>(k: string, fallback: T): T => {
+  try {
+    const v = sessionStorage.getItem(k);
+    return v ? (JSON.parse(v) as T) : fallback;
+  } catch {
+    return fallback;
+  }
+};
+
+const writeSessionJSON = (k: string, v: unknown) => {
+  try {
+    if (v == null) sessionStorage.removeItem(k);
+    else sessionStorage.setItem(k, JSON.stringify(v));
+  } catch { /* ignore */ }
+};
+
 const isUnit = (v: string | null): v is Unit => v === 'C' || v === 'F';
 
 export const appState = $state({
@@ -37,7 +53,7 @@ export const appState = $state({
     tio:  typeof localStorage !== 'undefined' ? localStorage.getItem(LS.keys.tio)  ?? '' : '',
   },
   favorites: typeof localStorage !== 'undefined' ? readJSON<Location[]>(LS.favorites, []) : [],
-  location: typeof localStorage !== 'undefined' ? readJSON<Location | null>(LS.lastLocation, null) : null,
+  location: typeof sessionStorage !== 'undefined' ? readSessionJSON<Location | null>(LS.lastLocation, null) : null,
   lastUpdated: null as Date | null,
 });
 
@@ -57,7 +73,8 @@ export const setKeys = (k: { owm: string; wapi: string; tio: string }) => {
 
 export const setLocation = (loc: Location | null) => {
   appState.location = loc;
-  writeJSON(LS.lastLocation, loc);
+  writeSessionJSON(LS.lastLocation, loc);
+  try { localStorage.removeItem(LS.lastLocation); } catch { /* ignore */ }
 };
 
 const sameLoc = (a: Location, b: Location) =>
