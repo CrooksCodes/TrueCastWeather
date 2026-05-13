@@ -284,7 +284,7 @@
   }
 
   @media (max-width: 720px) {
-    .hero { padding: 88px 20px 56px; }
+    .hero { padding: 88px 20px 84px; }
     .stage {
       grid-template-columns: 1fr;
       gap: 12px;
