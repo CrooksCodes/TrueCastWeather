@@ -3,7 +3,8 @@
 A small web app that averages live weather readings from multiple
 meteorological models. Highlights the 3 sources closest to the consensus,
 shows a 24-hour chart, 7-day outlook, air quality, sun & UV, and a model
-disagreement score. Hosted at `jeremycrooks.ca` (or any static host).
+disagreement score. Deployed on Vercel; linked from the maker's profile site
+at `jeremycrooks.ca`.
 
 ## Quick orientation
 

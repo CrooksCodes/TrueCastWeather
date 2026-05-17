@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Averages live readings from multiple meteorological models so you stop arguing with your weather app.",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "vite",
     "build": "svelte-check --tsconfig ./tsconfig.json && vite build",

@@ -8,8 +8,6 @@ models in parallel, averages them, and shows you the **3 sources closest to
 consensus** so you can see who actually agrees — plus a 24-hour chart, 7-day
 outlook, air quality, sun & UV, and a model-disagreement score.
 
-Live at **[jeremycrooks.ca](https://jeremycrooks.ca)**.
-
 ## Features
 
 - Averages live readings from up to 10 sources (6 distinct forecast models out
@@ -73,8 +71,10 @@ npm run preview      # serve the built bundle locally
 
 ## Deploy
 
-Run `npm run build` and copy `dist/` to any static host (your web root, GitHub
-Pages, Netlify, Cloudflare Pages, S3 + CloudFront, etc.).
+Deployed on **Vercel** (`vercel.json` defines the build). Push to the connected
+branch and Vercel builds + ships automatically. To deploy anywhere else, run
+`npm run build` and copy `dist/` to any static host (GitHub Pages, Cloudflare
+Pages, S3 + CloudFront, etc.).
 
 ## Project layout
 
