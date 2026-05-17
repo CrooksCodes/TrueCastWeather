@@ -31,13 +31,25 @@
   }: Props = $props();
 
   let section = $state('now');
+  let drawerOpen = $state(false);
+
+  function go(s: string) {
+    section = s;
+    drawerOpen = false;
+  }
 </script>
 
-<div class="layout" data-section={section}>
-  <Sidebar {section} onsection={(s) => (section = s)} />
+<svelte:window onkeydown={(e) => { if (e.key === 'Escape') drawerOpen = false; }} />
+
+<div class="layout" data-section={section} class:drawer-open={drawerOpen}>
+  <Sidebar {section} onsection={go} onnavigate={() => (drawerOpen = false)} />
+
+  {#if drawerOpen}
+    <button class="scrim" aria-label="Close menu" onclick={() => (drawerOpen = false)}></button>
+  {/if}
 
   <main class="main">
-    <Topbar {section} />
+    <Topbar {section} onmenu={() => (drawerOpen = true)} />
 
     <div class="content" data-section={section}>
       {#if !summary || !appState.location}
@@ -124,7 +136,7 @@
     </div>
 
     <div class="mobile-nav">
-      <BottomNav {section} onsection={(s) => (section = s)} />
+      <BottomNav {section} onsection={go} />
     </div>
   </main>
 </div>
@@ -180,7 +192,9 @@
   }
   .tile:hover { border-color: var(--line-strong); }
 
-  /* Neutralize nested card chrome from reused components — the tile is the card. */
+  /* Neutralize nested card chrome from reused components — the tile is the card.
+     Padding is intentionally NOT reset here: each component sets its own
+     (.aqi/.sun/.daily/.hourly), and zeroing it makes content touch the edges. */
   .tile :global(.card) {
     background: transparent;
     border: 0;
@@ -188,7 +202,6 @@
     border-radius: 0;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    padding: 0;
     height: 100%;
   }
   /* Top-sources / sources-table inside a tile shouldn't get the auto-fit grid. */
@@ -277,11 +290,48 @@
     .single.split { grid-template-columns: 1fr; }
   }
 
+  /* Scrim sits behind the drawer, above page content. Hidden on desktop. */
+  .scrim { display: none; }
+
   @media (max-width: 720px) {
+    /* Single-column page; the sidebar becomes an off-canvas drawer. */
     .layout { grid-template-columns: 1fr; }
-    :global(.layout > aside.sb) { display: none !important; }
+
+    :global(.layout > aside.sb) {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 60;
+      transform: translateX(-100%);
+      transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+      box-shadow: none;
+    }
+    .layout.drawer-open :global(> aside.sb) {
+      transform: translateX(0);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .scrim {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 55;
+      border: 0;
+      padding: 0;
+      background: oklch(8% 0.02 260 / 0.62);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      animation: scrimIn 200ms var(--ease) both;
+      cursor: default;
+    }
+
     .content { padding: 16px; }
     .content[data-section="now"] { padding: 14px; }
     .mobile-nav { display: block; }
+  }
+
+  @keyframes scrimIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 </style>

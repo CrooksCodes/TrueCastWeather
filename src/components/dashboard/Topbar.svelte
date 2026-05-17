@@ -3,8 +3,10 @@
 
   interface Props {
     section: string;
+    /** Opens the mobile navigation drawer (search / saved / settings). */
+    onmenu?: () => void;
   }
-  const { section }: Props = $props();
+  const { section, onmenu }: Props = $props();
 
   const TITLES: Record<string, string> = {
     now: 'Now',
@@ -24,6 +26,11 @@
 
 <div class="bar">
   <div class="left">
+    <button class="menu" aria-label="Open menu" onclick={onmenu}>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+    </button>
     <div class="title">{TITLES[section] ?? 'Now'}</div>
     {#if appState.lastUpdated}
       <span class="ts">updated {updatedText}</span>
@@ -48,6 +55,18 @@
   }
   .left { display: flex; align-items: baseline; gap: 12px; }
   .title { font-size: 14px; font-weight: 600; letter-spacing: -0.2px; }
+  .menu {
+    display: none;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    color: var(--text-dim);
+    width: 34px; height: 34px;
+    place-items: center;
+    align-self: center;
+    transition: border-color 200ms, color 200ms;
+  }
+  .menu:hover { color: var(--accent); border-color: var(--accent); }
   .ts { color: var(--text-mute); font-size: 11px; font-variant-numeric: tabular-nums; }
   .unit-toggle {
     display: inline-flex;
@@ -68,5 +87,10 @@
   .unit-toggle button.active {
     background: var(--bg-3);
     color: var(--text);
+  }
+
+  @media (max-width: 720px) {
+    .bar { padding: 12px 16px; }
+    .menu { display: grid; }
   }
 </style>
