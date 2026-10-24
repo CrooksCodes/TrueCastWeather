@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Averages live readings from multiple meteorological models so you stop arguing with your weather app.",
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "vite",
